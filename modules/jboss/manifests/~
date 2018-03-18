@@ -1,0 +1,23 @@
+class jboss::install
+(
+$jboss_version = $
+)
+{
+class{'::wildfly':
+    version          => $jboss_version,
+    install_source   => $jboss_install_source,
+    java_home        => $java_home,
+    dirname          => $jboss_home,
+    mode             => 'standalone',
+    java_opts        => $java_opts,
+    custom_init      => 'temenos/wildfly-init-redhat.sh',
+    public_http_port => $jboss_port,
+    user             => $temenos_user,
+    group            => $temenos_group,
+    manage_user      => false,
+    config           => 'T24.xml',
+    service_ensure   => false,
+    service_enable   => false,
+    require          => User[$temenos_user],
+   }
+}
